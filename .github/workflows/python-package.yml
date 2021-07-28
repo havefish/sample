@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.7] # 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -39,3 +39,21 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+
+  upload:
+    needs: [build]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - name: Upload Deployment Package
+        run: |
+          echo "zip"
+          echo "upload to s3"
+          aws s3 ls
