@@ -55,6 +55,6 @@ jobs:
 
       - name: Upload Deployment Package
         run: |
-          echo "zip"
-          echo "upload to s3"
-          aws s3 ls
+          zip sample.zip a.py
+          aws lambda update-function-code --function-name titan-data-loader-athena-executor --zip-file fileb://sample.zip --publish
+          rm -rf sample.zip
