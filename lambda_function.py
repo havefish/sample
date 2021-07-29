@@ -3,4 +3,4 @@ import a
 
 def lambda_handler(event, context):
     params = event["pathParameters"]
-    return {"result": a.f(**params)}
+    return {"data": a.f(**params)}
